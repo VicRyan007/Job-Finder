@@ -1,0 +1,26 @@
+{
+  "name": "job-finder",
+  "version": "1.0.0",
+  "description": "Portal para desenvolvedores encontrarem oportunidades de trabalho",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "dev",
+    "job",
+    "oportunity"
+  ],
+  "author": "Ryan Víctor <ryan.viktordeveloper@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "express-handlebars": "^8.0.1",
+    "sequelize": "^6.37.6",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
