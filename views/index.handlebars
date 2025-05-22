@@ -1,0 +1,47 @@
+<section id="top-container" class="container-fluid text-center">
+    <h1 id="main-title">Encontre o emprego dos seus sonhos</h1>
+    <p id="main-subtitle">Somos o site com mais vagas de tecnologia no mercado, direcionadas a home office</p>
+
+    <form method="GET" action="/" id="search-form" class="row justify-content-center">
+        <div class="col-md-8 mb-3">
+            <label for="job" class="visually-hidden">Buscar vaga</label>
+            <input type="text" class="form-control" id="job" name="job" placeholder="Digite a vaga que está procurando">
+        </div>
+        <div class="col-md-2 mb-3">
+            <button type="submit" class="btn btn-primary w-100">Buscar</button>
+        </div>
+    </form>
+</section>
+
+<main>
+    <div id="jobs-container" class="container mt-5">
+        <div class="col-md-12">
+
+            {{#if search}}
+            <h2 id="job-list-title" class="mb-4">
+                Buscando vagas que contêm: "{{search}}"
+            </h2>
+            {{else}}
+            <h2 id="job-list-title" class="mb-4">
+                Veja as nossas vagas em destaque
+            </h2>
+            {{/if}}
+
+            <ul id="job-list" class="list-group">
+                {{#each jobs}}
+                <li class="list-group-item {{#if dataValues.new_job}}new-job{{/if}} position-relative">
+                    <img src="/img/company.svg" alt="Logo da empresa">
+                    <p>{{dataValues.company}}</p>
+                    <p>{{dataValues.title}}</p>
+                    <p>R${{dataValues.salary}}</p>
+                    {{#if dataValues.new_job}}
+                    <span class="new-job-label">Nova</span>
+                    {{/if}}
+                    <a href="#" class="btn btn-primary">Ver vaga</a>
+                </li>
+                {{/each}}
+            </ul>
+
+        </div>
+    </div>
+</main>

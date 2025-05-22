@@ -1,30 +1,57 @@
-const express = require("express")
-const app = express()
-const db = require('./db/connection')
-const bodyParser = require("body-parser")
+const express    = require("express");
+const app        = express();
+const db         = require("./db/connection");
+const bodyParser = require("body-parser");
+const { engine } = require("express-handlebars");
+const path       = require("path");
+const Job        = require("./models/Job");
+const { Op, fn, col, where } = require("sequelize");
 
-const PORT = 3300
+const PORT = 3300;
 
-app.use(bodyParser.urlencoded({extended: false}))
+// Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.listen(PORT,function(){
-    console.log(`O express está rodando na porta ${PORT}`)
-})
+// Configurações do Handlebars
+app.set("views", path.join(__dirname, "views"));
+app.engine("handlebars", engine({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
-// db connection
+// Conexão com o banco de dados
 db.authenticate()
-.then(()=>{
-    console.log("Conectado com sucesso")
-})
-.catch(err => {
-    console.log("Ocorreu um erro ao conectar", err)
-})
+  .then(() => console.log("Conectado com sucesso"))
+  .catch(err => console.error("Erro ao conectar:", err));
 
-//routes
-app.get('/',(req,res) => {
-    res.send("Está funcionando")
-})
+// Rota principal com busca (insensível a maiúsculas/minúsculas)
+app.get("/", (req, res) => {
+  const search = (req.query.job || "").trim();
 
-// jobs routes
-app.use('/jobs', require('./routes/jobs'))
+  // Opções padrão de busca
+  const findOptions = {
+    order: [["createdAt", "DESC"]]
+  };
 
+  if (search) {
+    // Busca case-insensitive no campo title
+    findOptions.where = where(
+      fn("LOWER", col("title")),
+      { [Op.like]: `%${search.toLowerCase()}%` }
+    );
+  }
+
+  Job.findAll(findOptions)
+    .then(jobs => res.render("index", { jobs, search }))
+    .catch(err => {
+      console.error("Erro ao buscar jobs:", err);
+      res.status(500).send("Erro no servidor");
+    });
+});
+
+// Rotas de jobs (add, etc.)
+app.use("/jobs", require("./routes/jobs"));
+
+// Inicializa o servidor
+app.listen(PORT, () => 
+  console.log(`Servidor rodando em http://localhost:${PORT}`)
+);
