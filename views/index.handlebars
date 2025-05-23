@@ -36,11 +36,12 @@
                     <p>R${{dataValues.salary}}</p>
                     {{#if dataValues.new_job}}
                     <span class="new-job-label">Nova</span>
-                    {{/if}}
-                    <a href="#" class="btn btn-primary">Ver vaga</a>
+                    {{/if}} 
+                    <a class="btn btn-primary" href="/jobs/view/{{dataValues.id}}">Ver vaga</a>
                 </li>
                 {{/each}}
             </ul>
+
 
         </div>
     </div>

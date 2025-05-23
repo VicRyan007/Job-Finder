@@ -2,6 +2,15 @@ const express = require('express')
 const router = express.Router()
 const Job = require("../models/Job")
 
+// Detalhe da vaga -> view/1
+router.get('/view/:id',(req,res) => Job.findOne({
+    where: {id: req.params.id}
+}).then(job => {
+    res.render('view',{
+        job
+    })
+}).catch(err => console.log(err)))
+
 // Adiciona job via get
 router.get('/add', (req, res) => {
     res.render('add')
