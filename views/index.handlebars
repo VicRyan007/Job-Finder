@@ -30,7 +30,9 @@
             <ul id="job-list" class="list-group">
                 {{#each jobs}}
                 <li class="list-group-item {{#if dataValues.new_job}}new-job{{/if}} position-relative">
-                    <img src="/img/company.svg" alt="Logo da empresa">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16" style="position:absolute;left:24px;top:50%;transform:translateY(-50%);border-radius:50%;border:2px solid var(--primary-color);background:#fff;padding:12px;">
+                      <path d="M6.5 0a.5.5 0 0 0-.5.5V2H3a2 2 0 0 0-2 2v1h14V4a2 2 0 0 0-2-2h-3V.5a.5.5 0 0 0-.5-.5h-2zm1 .5V2h1V.5a.5.5 0 0 0-1 0zM1 5v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5H1zm0-1h14V4a1 1 0 0 0-1-1h-3V.5A1.5 1.5 0 0 0 8 .5h-2A1.5 1.5 0 0 0 4.5 2.5V3H1a1 1 0 0 0-1 1v1zm1 7V5h12v6a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                    </svg>
                     <p>{{dataValues.company}}</p>
                     <p>{{dataValues.title}}</p>
                     <p>R${{dataValues.salary}}</p>
